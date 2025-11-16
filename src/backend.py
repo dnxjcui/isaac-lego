@@ -16,7 +16,7 @@ from pdf2image import convert_from_path
 from perceptron.tensorstream.ops import tensor_stream_token_view
 from perceptron.pointing.parser import extract_points
 from perceptron.pointing.geometry import scale_points_to_pixels, BoundingBox
-from huggingface.modular_isaac import IsaacProcessor
+from src.huggingface.modular_isaac import IsaacProcessor
 
 
 class EmbeddingHook:

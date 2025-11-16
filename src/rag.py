@@ -303,30 +303,30 @@ if __name__ == "__main__":
     retrieved_images = [pdf_images[i] for i in top_indices]
     print(f"Retrieved {len(retrieved_images)} pages")
     
-    # Generate response
-    print("Generating response...")
-    vision_token = processor.vision_token
-    text_parts = ["Describe these images and how they relate to each other:"]
-    text_parts.extend([vision_token] * len(retrieved_images))
-    text = " ".join(text_parts)
+    # # Generate response
+    # print("Generating response...")
+    # vision_token = processor.vision_token
+    # text_parts = ["Describe these images and how they relate to each other:"]
+    # text_parts.extend([vision_token] * len(retrieved_images))
+    # text = " ".join(text_parts)
     
-    inputs = processor(text=text, images=retrieved_images, return_tensors="pt")
-    tensor_stream = inputs["tensor_stream"].to(device)
-    input_token_view = tensor_stream_token_view(tensor_stream)
-    input_seq_len = input_token_view.shape[1] if len(input_token_view.shape) > 1 else input_token_view.shape[0]
+    # inputs = processor(text=text, images=retrieved_images, return_tensors="pt")
+    # tensor_stream = inputs["tensor_stream"].to(device)
+    # input_token_view = tensor_stream_token_view(tensor_stream)
+    # input_seq_len = input_token_view.shape[1] if len(input_token_view.shape) > 1 else input_token_view.shape[0]
     
-    with torch.no_grad():
-        generated_ids = model.generate(
-            tensor_stream=tensor_stream,
-            max_new_tokens=256,
-            do_sample=False,
-            pad_token_id=tokenizer.eos_token_id,
-            eos_token_id=tokenizer.eos_token_id,
-        )
+    # with torch.no_grad():
+    #     generated_ids = model.generate(
+    #         tensor_stream=tensor_stream,
+    #         max_new_tokens=256,
+    #         do_sample=False,
+    #         pad_token_id=tokenizer.eos_token_id,
+    #         eos_token_id=tokenizer.eos_token_id,
+    #     )
     
-    if generated_ids.shape[1] > input_seq_len:
-        new_tokens = generated_ids[0, input_seq_len:]
-        response = tokenizer.decode(new_tokens, skip_special_tokens=True)
-        print(f"\nResponse:\n{response}")
-    else:
-        print("No response generated")
+    # if generated_ids.shape[1] > input_seq_len:
+    #     new_tokens = generated_ids[0, input_seq_len:]
+    #     response = tokenizer.decode(new_tokens, skip_special_tokens=True)
+    #     print(f"\nResponse:\n{response}")
+    # else:
+    #     print("No response generated")
