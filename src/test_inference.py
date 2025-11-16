@@ -2,7 +2,6 @@ import torch
 from PIL import Image
 from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM, AutoProcessor
 
-
 def load_model(device=None, dtype=None):
     """Load model using AutoProcessor (matches reference pattern)."""
     hf_path = "PerceptronAI/Isaac-0.1"
